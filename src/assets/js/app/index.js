@@ -10,6 +10,8 @@
 import HashState, { isHistorySupported } from './helpers/HashState';
 import initFlagWaverApp from './main';
 
+import flagImg from '../../img/NZ.2b.png';
+
 var app;
 
 //
@@ -169,7 +171,7 @@ var app;
         $.extend(flagWaverOpts.flag, flagWaverDefaults.flag, flagOpts);
 
         setFlagOpts({
-            imgSrc: flagWaverOpts.flag.imgURL || './assets/img/NZ.2b.png',
+            imgSrc: flagWaverOpts.flag.imgURL || flagImg,
             topEdge: flagWaverOpts.flag.topEdge,
             hoisting: flagWaverOpts.flag.hoisting
         });
