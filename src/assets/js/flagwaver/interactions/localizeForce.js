@@ -1,4 +1,4 @@
-import THREE from 'three';
+import * as THREE from 'three';
 
 const tmp = new THREE.Vector3();
 const worldPosition = new THREE.Vector3();

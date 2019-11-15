@@ -6,7 +6,7 @@
  */
 
 // FlagWaver - Core
-import './flagwaver';
+// import './flagwaver';
 
 // UI
 import './app';

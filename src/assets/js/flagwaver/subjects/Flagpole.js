@@ -1,4 +1,4 @@
-import THREE from 'three';
+import * as THREE from 'three';
 import { Side, FlagpoleType } from '../constants';
 import { createPoleGeometryTypeI } from './FlagpoleGeometryUtils';
 
@@ -25,18 +25,12 @@ export default class Flagpole {
         const geometry = this.buildGeometry(settings);
 
         // Material
-        const material = new THREE.MeshPhongMaterial({
+        const material = new THREE.MeshStandardMaterial({
             color:     0x6A6A6A,
-            specular:  0xffffff,
-            metal:     true,
-            shininess: 18
         });
 
         // Mesh
         const mesh = new THREE.Mesh(geometry, material);
-
-        mesh.receiveShadow = true;
-        mesh.castShadow    = true;
 
         this.mesh = mesh;
         this.object = this.mesh;
@@ -70,6 +64,7 @@ export default class Flagpole {
 
     addFlag(flag) {
         flag.unpin();
+        // FIXME: 设置方向
         flag.pin({ edges: [Side.LEFT] });
         flag.setLengthConstraints(Side.LEFT);
     }

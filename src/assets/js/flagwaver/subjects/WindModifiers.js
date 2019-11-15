@@ -8,7 +8,17 @@ const WindModifiers = {
     noEffect: () => {},
 
     blowFromLeftDirection: (wind) => {
-        wind.force.set(2000, 0, 1000);
+        // wind.force.set(2000, 0, 1000);
+        // wind.force.set(2000, 0, -1000);
+
+        // 300 * 200 * 0.1
+        // wind.force.set(1000, 500, 1);
+        // 300 * 100 * 0.15
+        wind.force.set(1000, 700, 1);
+    },
+
+    blowFromTopDirection: (wind) => {
+        // wind.force.set(2000, 0, 1000);
     },
 
     rotatingDirection: (wind, time) => {

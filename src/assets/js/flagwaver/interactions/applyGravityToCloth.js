@@ -1,4 +1,4 @@
-import THREE from 'three';
+import * as THREE from 'three';
 import { G } from '../constants';
 import localizeForce from './localizeForce';
 

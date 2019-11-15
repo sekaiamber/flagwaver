@@ -1,4 +1,4 @@
-import THREE from 'three';
+import * as THREE from 'three';
 import { Hoisting, Side } from '../constants';
 import getAngleOfSide from '../utils/getAngleOfSide';
 import { isNumeric, isObject } from '../utils/TypeUtils';
@@ -166,8 +166,9 @@ function createTextureFromImage(image, options) {
                 Number((canvas.width / canvas.height).toFixed(4))
         );
 
-        ctx.fillStyle = '#ff00ff';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        // 填充色
+        // ctx.fillStyle = '#0000ff';
+        // ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
 
     ctx.drawImage(

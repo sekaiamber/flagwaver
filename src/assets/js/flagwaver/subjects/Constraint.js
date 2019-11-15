@@ -1,4 +1,4 @@
-import THREE from 'three';
+import * as THREE from 'three';
 
 const diff = new THREE.Vector3();
 

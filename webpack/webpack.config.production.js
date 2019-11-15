@@ -5,42 +5,33 @@ var MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 var TerserPlugin = require('terser-webpack-plugin');
 const packageJson = require('../package.json');
-const {
-  routers
-} = require('./routers.production.json');
 
-const config = require('./config.production.json');
-
-const entry = {};
-routers.forEach((r) => {
-  entry[r.name] = r.entry;
-});
-const plugins = routers.map(r => new HtmlWebpackPlugin({
-  template: r.template,
-  filename: r.filename,
-  chunks: [r.name],
-}));
 
 module.exports = {
   mode: 'development',
   context: path.join(__dirname, '..', 'src/'),
-  entry,
+  entry: {
+    t9flag: './index.js'
+  },
   output: {
-    path: path.join(__dirname, '..', '/dist/assets'),
+    path: path.join(__dirname, '..', '/dist'),
     filename: '[name].[chunkhash:8].js',
-    publicPath: '//assets.liull.cn/aq/static/'
   },
   plugins: [
     new webpack.DefinePlugin({
       __VERSION__: JSON.stringify(packageJson.version),
-      __CONFIG__: JSON.stringify(config),
     }),
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
       filename: "[name].[chunkhash:8].css",
     }),
-  ].concat(plugins),
+    new HtmlWebpackPlugin({
+      template: './index.html',
+      filename: 'index.html',
+      chunks: ['t9flag'],
+    }),
+  ],
   module: {
     rules: [{
       test: /\.jsx?$/,
@@ -76,15 +67,18 @@ module.exports = {
     {
       test: /\.html$/,
       use: "html-loader"
-    },],
+    }, {
+      test: /\.glsl$/,
+      use: [{
+        loader: 'webpack-glsl-loader',
+      }, ],
+    }, ],
   },
   resolve: {
     extensions: ['.js', '.jsx'],
   },
   externals: {
-    react: "React",
-    'react-dom': "ReactDOM",
-    antd: 'antd',
+    three: 'THREE',
   },
   optimization: {
     minimizer: [new TerserPlugin({

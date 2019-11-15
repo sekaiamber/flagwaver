@@ -1,4 +1,4 @@
-import THREE from 'three';
+import * as THREE from 'three';
 import Particle from './Particle';
 import Constraint from './Constraint';
 
@@ -27,6 +27,10 @@ export default class Cloth {
 
         // Cloth plane function
         const plane = (u, v) => new THREE.Vector3(u * width, v * height, 0);
+
+        const newPlane = (u, v, target) => {
+            target.set(u * width, v * height, 0);
+        }
 
         //
         // Particles
@@ -162,7 +166,7 @@ export default class Cloth {
         //
 
         const geometry = new THREE.ParametricGeometry(
-            plane,
+            newPlane,
             xSegments,
             ySegments,
             true

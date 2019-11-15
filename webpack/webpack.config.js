@@ -93,4 +93,7 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
   },
+  externals: {
+    three: 'THREE',
+  },
 };

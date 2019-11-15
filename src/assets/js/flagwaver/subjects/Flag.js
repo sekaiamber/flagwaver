@@ -1,4 +1,4 @@
-import THREE from 'three';
+import * as THREE from 'three';
 import { Side } from '../constants';
 import { isNumeric } from '../utils/TypeUtils';
 import ShaderChunk from '../webgl/ShaderChunk';
@@ -6,8 +6,31 @@ import Cloth from './Cloth';
 import FixedConstraint from './FixedConstraint';
 
 // Default flag texture
-const WHITE_TEXTURE = THREE.ImageUtils
-    .generateDataTexture(1, 1, new THREE.Color(0xffffff));
+function generateDataTexture( width, height, color ) {
+
+    var size = width * height;
+    var data = new Uint8Array( 3 * size );
+
+    var r = Math.floor( color.r * 255 );
+    var g = Math.floor( color.g * 255 );
+    var b = Math.floor( color.b * 255 );
+
+    for ( var i = 0; i < size; i ++ ) {
+
+        data[ i * 3 ] 	   = r;
+        data[ i * 3 + 1 ] = g;
+        data[ i * 3 + 2 ] = b;
+
+    }
+
+    var texture = new THREE.DataTexture( data, width, height, THREE.RGBFormat );
+    texture.needsUpdate = true;
+
+    return texture;
+
+}
+
+const WHITE_TEXTURE = generateDataTexture(1, 1, new THREE.Color(0xffffff));
 
 function buildCloth(options) {
     const restDistance = options.height / options.granularity;
@@ -25,17 +48,11 @@ function buildMesh(cloth, options) {
     const geometry = cloth.geometry;
 
     // Material
-    const material = new THREE.MeshPhongMaterial({
+    const material = new THREE.MeshStandardMaterial({
         alphaTest: 0.5,
+        roughness: 0.5,
+        metalness: 0.8,
         color:     0xffffff,
-        specular:  0x030303,
-        /*
-         * shininess cannot be 0 as it causes bugs in some systems.
-         * https://github.com/mrdoob/three.js/issues/7252
-         */
-        shininess: 0.001,
-        metal:     false,
-        side:      THREE.DoubleSide
     });
 
     /* //
@@ -182,9 +199,10 @@ export default class Flag {
 
     static defaults = {
         width:          300,
-        height:         200,
-        mass:           0.1,
-        granularity:    10,
+        height:         100,
+        mass:           0.15,
+        // 调整粒度
+        granularity:    12,
         rigidness:      1,
         texture:        WHITE_TEXTURE,
         pin:            {

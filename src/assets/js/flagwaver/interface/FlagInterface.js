@@ -1,4 +1,4 @@
-import THREE from 'three';
+import * as THREE from 'three';
 import loadImage from '../helpers/loadImage';
 import buildFlag from '../builders/buildFlag';
 
